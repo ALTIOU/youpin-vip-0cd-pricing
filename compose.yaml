@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+services:
+  repricer:
+    build: .
+    image: youpin-rent-repricer:local
+    restart: unless-stopped
+    user: "${PUID:-1000}:${PGID:-1000}"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    cpus: 0.25
+    pids_limit: 64
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+      TZ: Asia/Shanghai
+    volumes:
+      - ./state:/state
+      - ./policy.json:/config/policy.json:ro
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    command: ["--state", "/state/session.json", "--policy", "/config/policy.json", "--output", "/state/latest-result.json", "--loop"]
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: "3"

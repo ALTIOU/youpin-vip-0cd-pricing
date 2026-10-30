@@ -1,0 +1,6 @@
+include README.md LICENSE COPYING.GPL-3.0 THIRD_PARTY_NOTICES.txt LICENSING.txt
+include Dockerfile compose.yaml compose.live.yaml .dockerignore .gitignore
+recursive-include LICENSES *.txt
+recursive-include examples *.example.json
+recursive-include tests *.py
+recursive-include .github/workflows *.yml

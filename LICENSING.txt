@@ -1,0 +1,35 @@
+License layout for the public source release
+============================================
+
+New original application code may be offered under AGPL-3.0-only. LICENSE is the
+verbatim AGPLv3 text. Retain GPL-3.0-only for the CS2TradeMonitor-derived modules,
+and include COPYING.GPL-3.0. For packaging metadata that describes the whole
+mixed source distribution, AGPL-3.0-only AND GPL-3.0-only is an accurate SPDX
+expression, subject to the final per-file review.
+
+Recommended conservative per-file notices:
+- uu_client.py: GPL-3.0-only, with source revision and modification date.
+- reprice_writer.py: GPL-3.0-only, with source revision and modification date.
+- reprice_runner.py: preserve a GPL-3.0-only notice if its executor/adaptation
+  is treated as derived; otherwise new original portions may be AGPL-3.0-only.
+  Do not remove existing provenance during package refactoring.
+- Newly written setup UI, independent pagination, tests, build scripts and docs:
+  AGPL-3.0-only unless a copied upstream block requires its original notice.
+
+Use one clear notice for each file. Avoid calling an interleaved copied module
+AGPL merely because an AGPL LICENSE appears at the repository root. The special
+GPL/AGPL combination permission preserves the original covered part's license.
+If future source copies add an incompatible license, review those additions
+rather than assuming this layout covers them.
+
+Add a short source/modification notice to derived files. Keep original copyright,
+license and warranty notices wherever present. The reviewed source files lacked
+an individual author/year header; do not invent a personal owner or claim an
+upstream author assigned ownership. Attribution to the upstream project and its
+contributors, exact revision links and the modification date are appropriate.
+
+For modified services made available to other network users, provide a prominent
+link to the Corresponding Source of the running version, per AGPLv3 section 13.
+The loopback-only private setup page is not a reason to publish account tokens,
+private configuration or user data. Source availability concerns the software,
+not the secrets it processes.

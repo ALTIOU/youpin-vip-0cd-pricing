@@ -1,0 +1,71 @@
+Third-party source notices
+==========================
+
+This application includes a Python adaptation of selected YouPin interface and
+repricing implementations, together with a separately maintained scheduler,
+local setup UI and tests. It is not an official YouPin product and is not an
+unchanged distribution of either upstream application.
+
+CS2TradeMonitor
+---------------
+Source: https://github.com/cs2juece/CS2TradeMonitor
+Reviewed revision: 41d52fdb7997e023e6c431a7173baa9d8b00806e
+License: GNU General Public License, version 3.
+Full text: COPYING.GPL-3.0 (also LICENSES/GPL-3.0-only.txt).
+
+Relevant upstream files:
+- src/Application/YouPin/YouPinAuthService.cs
+- src/Application/YouPin/YouPinMobileApiClient.cs
+- src/Application/YouPin/YouPinLandlordGateway.cs
+- src/Application/YouPin/YouPinLandlordRepriceProfile.cs
+- src/Application/YouPin/YouPinLandlordRepriceExecutor.cs
+
+The request profile, device handshake and authentication contracts in uu_client.py,
+and the repricing payload/profile handling in reprice_writer.py, were adapted
+from or implemented with reference to these files. Their GPL-covered portions
+retain GPLv3 terms. Upstream authors retain their applicable copyright.
+
+Modifications, 2026-10-30: Python adaptation; bounded network responses; explicit
+write opt-in; local user-operated SMS setup; conservative account-info fallback;
+complete visible-market pagination; own-listing exclusion; minimum-minus-one-cent
+pricing; long/short-rent synchronization; before/after validation; and a durable
+no-replay recovery journal. This description credits provenance and does not
+claim that every named improvement is absent from the upstream project.
+
+Steamauto
+---------
+Source: https://github.com/Steamauto/Steamauto
+Reviewed revision: ce4fb1f5c4b8af0caeda9d8b6357046cee208827
+License: GNU Affero General Public License, version 3.
+Full text: LICENSE (also LICENSES/AGPL-3.0-only.txt).
+
+Relevant upstream files:
+- uuyoupinapi/__init__.py
+- uuyoupinapi/UUApiCrypt.py
+- utils/uu_helper.py
+- plugins/UUAutoLeaseItem.py
+
+Used to cross-check YouPin login, outgoing-SMS, own-shelf and market-query
+contracts. No Steamauto application, plugin distribution, trade-delivery code,
+credentials or bundled resources are included. No specific verbatim copied
+Steamauto code block was identified in this review; references to interface
+facts are not a claim that the original project's code was wholly rewritten
+or re-licensed. Retain this attribution and review future copied code under
+its original terms.
+
+Dependencies
+------------
+The source release should declare requests and pycryptodome as dependencies
+and install them through normal packaging. Do not include the personal NAS
+vendor directory, build environment, cached wheels or Home Assistant image in
+the source release. Those packages and any distributed container image keep
+their own licenses and notices. A binary/container release needs an inventory
+of what it actually distributes; this notice does not replace such an inventory.
+
+Combination
+-----------
+GNU GPLv3 section 13 and GNU AGPLv3 section 13 permit the covered modules to be
+combined. Original GPL-covered portions remain under GPLv3; AGPLv3 network-source
+requirements apply to the combination as specified there. This is not a blanket
+relicensing of original GPL portions to AGPL, and the repository is not offered
+under MIT/Apache solely on the basis of its Python adaptation.

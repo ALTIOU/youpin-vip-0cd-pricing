@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Explicit opt-in: this override enables real price changes.
+services:
+  repricer:
+    command: ["--state", "/state/session.json", "--policy", "/config/policy.json", "--output", "/state/latest-result.json", "--loop", "--apply"]

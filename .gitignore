@@ -1,0 +1,34 @@
+# Runtime state is account access. Never commit it.
+state/
+.private/
+**/session.json
+**/policy.json
+**/pending-journal.json
+**/*-private.json
+**/*-result.json
+**/*.log
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.zip
+*.tar
+*.tar.gz
+*.png
+*.jpg
+*.jpeg
+*.webp
+# Local builds and environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.coverage
+htmlcov/
+.DS_Store

@@ -1,0 +1,7 @@
+{
+  "interval_seconds": 3600,
+  "minimum_price": "0.01",
+  "undercut_price": "0.01",
+  "sync_long_rent_at_short": true,
+  "max_market_pages": 10
+}

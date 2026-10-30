@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "youpin-rent-repricer"
+version = "0.1.0b1"
+license = "AGPL-3.0-only AND GPL-3.0-only"
+license-files = ["LICENSE", "COPYING.GPL-3.0", "LICENSING.txt", "THIRD_PARTY_NOTICES.txt", "LICENSES/*"]
+authors = [{name = "ALTIOU"}]
+description = "Local-first hourly YouPin 0CD rental repricing with explicit apply and readback checks"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["requests>=2.32,<3", "pycryptodome>=3.20,<5"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+]
+
+[project.urls]
+Repository = "https://github.com/ALTIOU/youpin-rent-repricer"
+Issues = "https://github.com/ALTIOU/youpin-rent-repricer/issues"
+
+[project.scripts]
+youpin-reprice = "youpin_rent_repricer.reprice_runner:main"
+youpin-login = "youpin_rent_repricer.setup_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

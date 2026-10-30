@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip build
+      - run: python -m pip install -e .
+      - run: python -m unittest discover -s tests -v
+      - run: youpin-reprice --help
+      - run: youpin-login --help
+      - run: python -m build
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker build --tag youpin-rent-repricer:test .
+      - run: docker run --rm youpin-rent-repricer:test --help
+      - name: Verify preview and live Compose modes
+        run: |
+          docker compose config --format json > /tmp/preview.json
+          docker compose -f compose.yaml -f compose.live.yaml config --format json > /tmp/live.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          preview = json.loads(Path('/tmp/preview.json').read_text())['services']['repricer']['command']
+          live = json.loads(Path('/tmp/live.json').read_text())['services']['repricer']['command']
+          assert '--loop' in preview and '--apply' not in preview
+          assert '--loop' in live and '--apply' in live
+          PY
