@@ -29,8 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - run: docker build --tag youpin-rent-repricer:test .
-      - run: docker run --rm youpin-rent-repricer:test --help
+      - run: docker build --tag youpin-vip-0cd-pricing:test .
+      - run: docker run --rm youpin-vip-0cd-pricing:test --help
       - name: Verify preview and live Compose modes
         run: |
           docker compose config --format json > /tmp/preview.json

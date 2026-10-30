@@ -1,8 +1,8 @@
-# YouPin Rent Repricer · 悠悠 0CD 租金调价
+# 悠悠有品大会员0cd 转租省心定价方案
 
-[![CI](https://github.com/ALTIOU/youpin-rent-repricer/actions/workflows/ci.yml/badge.svg)](https://github.com/ALTIOU/youpin-rent-repricer/actions/workflows/ci.yml)
+[![CI](https://github.com/ALTIOU/youpin-vip-0cd-pricing/actions/workflows/ci.yml/badge.svg)](https://github.com/ALTIOU/youpin-vip-0cd-pricing/actions/workflows/ci.yml)
 
-NAS 常驻的悠悠有品 0CD 租金调价工具。按小时读取行情、排除自己的挂单，将长租和短租同步到目标价。默认只预览，明确加 `--apply` 后才改价。
+面向悠悠有品大会员 0CD 转租的 NAS 常驻调价工具。按小时读取行情、排除自己的挂单，将长租和短租同步到目标价。默认只预览，明确加 `--apply` 后才改价。
 
 > Unofficial, local-first YouPin 0CD rental repricer. Hourly checks, explicit apply, and post-write verification. No GPT or OpenAI API is used.
 
@@ -29,8 +29,8 @@ NAS 常驻的悠悠有品 0CD 租金调价工具。按小时读取行情、排�
 需要 Python 3.11+。请先在自己可信任的电脑上完成登录；登录页仅绑定 `127.0.0.1`。
 
 ```sh
-git clone https://github.com/ALTIOU/youpin-rent-repricer.git
-cd youpin-rent-repricer
+git clone https://github.com/ALTIOU/youpin-vip-0cd-pricing.git
+cd youpin-vip-0cd-pricing
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -e .

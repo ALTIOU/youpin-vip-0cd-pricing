@@ -4,12 +4,12 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "youpin-rent-repricer"
+name = "youpin-vip-0cd-pricing"
 version = "0.1.0b1"
 license = "AGPL-3.0-only AND GPL-3.0-only"
 license-files = ["LICENSE", "COPYING.GPL-3.0", "LICENSING.txt", "THIRD_PARTY_NOTICES.txt", "LICENSES/*"]
 authors = [{name = "ALTIOU"}]
-description = "Local-first hourly YouPin 0CD rental repricing with explicit apply and readback checks"
+description = "Hourly YouPin VIP 0CD sublet pricing with explicit apply and readback checks"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = ["requests>=2.32,<3", "pycryptodome>=3.20,<5"]
@@ -23,8 +23,8 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://github.com/ALTIOU/youpin-rent-repricer"
-Issues = "https://github.com/ALTIOU/youpin-rent-repricer/issues"
+Repository = "https://github.com/ALTIOU/youpin-vip-0cd-pricing"
+Issues = "https://github.com/ALTIOU/youpin-vip-0cd-pricing/issues"
 
 [project.scripts]
 youpin-reprice = "youpin_rent_repricer.reprice_runner:main"

@@ -2,7 +2,7 @@
 services:
   repricer:
     build: .
-    image: youpin-rent-repricer:local
+    image: youpin-vip-0cd-pricing:local
     restart: unless-stopped
     user: "${PUID:-1000}:${PGID:-1000}"
     read_only: true

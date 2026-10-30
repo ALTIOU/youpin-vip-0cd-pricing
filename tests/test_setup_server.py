@@ -7,7 +7,7 @@ import time
 import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from http.server import ThreadingHTTPServer
 
 from youpin_rent_repricer.setup_server import Inspector, make_handler
@@ -218,6 +218,38 @@ class BoundaryTests(unittest.TestCase):
         status, _, _ = self.request('/api/up-config', {'phone': '13800000000'}, origin=False)
         self.assertEqual(status, 403)
         self.app.client.request_sms_up.assert_not_called()
+
+    def test_first_request_on_fresh_boot_is_allowed_then_cooldown_applies(self):
+        for path, method_name, cooldown in (
+            ('/api/sms', 'request_sms', 60),
+            ('/api/up-config', 'request_sms_up', 30),
+        ):
+            with self.subTest(path=path):
+                provider = Mock(return_value={'ok': True, 'message': 'synthetic response'})
+                setattr(self.app.client, method_name, provider)
+                with patch('time.monotonic', return_value=10):
+                    status, _, body = self.request(path, {'phone': '13800000000'})
+                    self.assertEqual(status, 200, body)
+                    self.assertTrue(json.loads(body)['ok'])
+                    status, _, body = self.request(path, {'phone': '13800000000'})
+                    self.assertEqual(status, 400)
+                    self.assertIn(f'{cooldown} 秒', json.loads(body)['message'])
+                provider.assert_called_once_with('13800000000')
+                with patch('time.monotonic', return_value=10 + cooldown):
+                    status, _, body = self.request(path, {'phone': '13800000000'})
+                    self.assertEqual(status, 200, body)
+                self.assertEqual(provider.call_count, 2)
+
+    def test_zero_monotonic_timestamp_is_still_a_recorded_request(self):
+        self.app.client.request_sms.return_value = {'ok': True, 'message': 'synthetic response'}
+        with patch('time.monotonic', return_value=0):
+            status, _, _ = self.request('/api/sms', {'phone': '13800000000'})
+            self.assertEqual(status, 200)
+        with patch('time.monotonic', return_value=1):
+            status, _, body = self.request('/api/sms', {'phone': '13800000000'})
+            self.assertEqual(status, 400)
+            self.assertIn('60 秒', json.loads(body)['message'])
+        self.app.client.request_sms.assert_called_once_with('13800000000')
 
     def test_login_form_is_loopback_scoped_and_has_csp(self):
         status, headers, body = self.request('/')

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Adapted with reference to CS2TradeMonitor contributors, revision
 # 41d52fdb7997e023e6c431a7173baa9d8b00806e.
-# Modified for YouPin Rent Repricer on 2026-10-30.
+# Modified for YouPin VIP 0CD Pricing on 2026-10-30.
 # See THIRD_PARTY_NOTICES.txt for provenance and combined-license terms.
 """Bounded YouPin authentication and query client; price writes need opt-in.
 

@@ -92,8 +92,10 @@ class Inspector:
         self.lock = threading.Lock()
         self.csrf = secrets.token_urlsafe(32)
         self.nonce = secrets.token_urlsafe(20)
-        self.last_sms = 0.0
-        self.last_up_config = 0.0
+        # A monotonic clock is elapsed time since boot, not Unix time. Zero is
+        # a valid reading on a fresh system, so use None for "never requested".
+        self.last_sms: float | None = None
+        self.last_up_config: float | None = None
 
     def save_state(self):
         atomic_private_json(self.state_file, self.client.state)
@@ -174,7 +176,7 @@ def make_handler(app):
                         raise ValueError('请填写正确的中国大陆手机号')
                 if self.path == '/api/up-config':
                     import time
-                    if time.monotonic() - app.last_up_config < 30:
+                    if app.last_up_config is not None and time.monotonic() - app.last_up_config < 30:
                         raise ValueError('请间隔至少 30 秒再获取说明')
                     app.last_up_config = time.monotonic()
                     result = app.client.request_sms_up(phone)
@@ -188,7 +190,7 @@ def make_handler(app):
                     self.send(200, app.read())
                 elif self.path == '/api/sms':
                     import time
-                    if time.monotonic() - app.last_sms < 60:
+                    if app.last_sms is not None and time.monotonic() - app.last_sms < 60:
                         raise ValueError('请间隔至少 60 秒再申请验证码')
                     app.last_sms = time.monotonic()
                     result = app.client.request_sms(phone)
